@@ -277,7 +277,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 823
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -434,12 +434,6 @@ MonoBehaviour:
   BlueMask:
     serializedVersion: 2
     m_Bits: 8
-  RedLensMask:
-    serializedVersion: 2
-    m_Bits: 256
-  BlueLensMask:
-    serializedVersion: 2
-    m_Bits: 512
   LensAnim: {fileID: 372991612}
 --- !u!95 &372991612
 Animator:
@@ -1079,12 +1073,6 @@ MonoBehaviour:
   BlueMask:
     serializedVersion: 2
     m_Bits: 8
-  RedLensMask:
-    serializedVersion: 2
-    m_Bits: 0
-  BlueLensMask:
-    serializedVersion: 2
-    m_Bits: 0
   LensAnim: {fileID: 0}
 --- !u!4 &1119848217
 Transform:
@@ -1633,7 +1621,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2032872688}
   - component: {fileID: 2032872689}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: RedLens
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1724,7 +1712,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2043145961}
   - component: {fileID: 2043145962}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: BlueLens
   m_TagString: Untagged
   m_Icon: {fileID: 0}

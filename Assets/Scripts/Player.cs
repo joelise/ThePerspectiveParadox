@@ -26,8 +26,10 @@ public class Player : MonoBehaviour
     private bool _isGrounded;
     private float _verticalVelocity;
 
-    private bool RedOn = false;
-    private bool BlueOn = false;
+    public bool RedOn = false;
+    public bool BlueOn = false;
+
+    public Animator LensAnim;
 
     private void Awake()
     {
@@ -109,19 +111,24 @@ public class Player : MonoBehaviour
         blueLensAction.action.performed -= ToggleBlueLens;
     }
 
-    void ToggleRedLens(InputAction.CallbackContext context)
+    public void ToggleRedLens(InputAction.CallbackContext context)
     {
-        RedOn = !RedOn;
+        LensManager.Instance.ToggleRedLens();
+        /*RedOn = !RedOn;
+
+        //LensAnim.SetBool("RedActive", RedOn);
 
         if (RedOn)
             LensManager.Instance.ToggleRedOn();
         else
-            LensManager.Instance.ToggleRedOff();
+            LensManager.Instance.ToggleRedOff();*/
     }
 
-    void ToggleBlueLens(InputAction.CallbackContext context)
+    public void ToggleBlueLens(InputAction.CallbackContext context)
     {
         BlueOn = !BlueOn;
+
+        //LensAnim.SetBool("BlueActive", BlueOn);
 
         if (BlueOn)
             LensManager.Instance.ToggleBlueOn();
