@@ -113,27 +113,46 @@ public class Player : MonoBehaviour
 
     public void ToggleRedLens(InputAction.CallbackContext context)
     {
-        LensManager.Instance.ToggleRedLens();
-        /*RedOn = !RedOn;
+        //LensManager.Instance.ToggleRedLens();
+
 
         //LensAnim.SetBool("RedActive", RedOn);
-
-        if (RedOn)
-            LensManager.Instance.ToggleRedOn();
+        if (!BlueOn && LensManager.Instance.playing == false)
+        {
+            RedOn = !RedOn;
+            if (RedOn)
+                LensManager.Instance.ToggleRedOn();
+            else
+                LensManager.Instance.ToggleRedOff();
+        }
         else
-            LensManager.Instance.ToggleRedOff();*/
+        {
+            return;
+        }
+
     }
 
     public void ToggleBlueLens(InputAction.CallbackContext context)
     {
-        BlueOn = !BlueOn;
+        //LensManager.Instance.ToggleBlueLens();
+
 
         //LensAnim.SetBool("BlueActive", BlueOn);
 
-        if (BlueOn)
-            LensManager.Instance.ToggleBlueOn();
+        if (!RedOn && LensManager.Instance.playing == false)
+        {
+            BlueOn = !BlueOn;
+            if (BlueOn)
+                LensManager.Instance.ToggleBlueOn();
+            else
+                LensManager.Instance.ToggleBlueOff();
+        }
         else
-            LensManager.Instance.ToggleBlueOff();
+        {
+            return;
+        }
+
+       
     }
 
 }

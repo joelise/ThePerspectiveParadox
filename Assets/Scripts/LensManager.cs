@@ -24,9 +24,9 @@ public class LensManager : MonoBehaviour
 
     private bool redActive;
     private bool blueActive;
+    public bool playing = false;
 
-    
-
+    MaterialPropertyBlock mpb;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -72,16 +72,35 @@ public class LensManager : MonoBehaviour
 
     }
 
+    public void ToggleBlueLens()
+    {
+        blueActive = !blueActive;
+        ApplyBlueLensState();
+    }
+
+    public void ApplyBlueLensState()
+    {
+        if (blueActive)
+        {
+            ToggleBlueOn();
+        }
+        else
+        {
+            ToggleBlueOff();
+        }
+    }
+
 
     
     public void ToggleRedOn()
     {
+        playing = true;
         //LensAnim.SetBool("RedActive", true);
-        //cam.cullingMask += RedMask;
+        cam.cullingMask += RedMask;
         //RedLens.SetActive(true);
-        //StartCoroutine(StartAnimation("RedLensOn"));
+        StartCoroutine(StartAnimation("RedLensOn"));
         //cam.cullingMask += RedLensMask;
-        StartCoroutine(PlayAnimation("RedLensOn", "RedLensOff", RedMask, RedLensMask, true));
+        //StartCoroutine(PlayAnimation("RedLensOn", "RedLensOff", RedMask, RedLensMask, true));
         Physics.IgnoreLayerCollision(playerLayer, redLayer, false);
         Physics.IgnoreLayerCollision(playerLayer, blueLayer, true);
         
@@ -90,11 +109,12 @@ public class LensManager : MonoBehaviour
 
     public void ToggleRedOff()
     {
+        playing = true;
         //LensAnim.SetBool("RedActive", false);
-        //StartCoroutine(EndAnimation("RedLensOff", RedMask));
+        StartCoroutine(EndAnimation("RedLensOff", RedMask));
         //cam.cullingMask -= RedMask;
 
-        StartCoroutine(PlayAnimation("RedLensOn", "RedLensOff", RedMask, RedLensMask, false));
+        //StartCoroutine(PlayAnimation("RedLensOn", "RedLensOff", RedMask, RedLensMask, false));
         //cam.cullingMask -= RedLensMask;
 
         Physics.IgnoreLayerCollision(playerLayer, redLayer, true);
@@ -103,15 +123,19 @@ public class LensManager : MonoBehaviour
 
     public void ToggleBlueOn()
     {
+        playing = true;
         cam.cullingMask += BlueMask;
-
+        StartCoroutine(StartAnimation("BlueLensOn"));
+        //StartCoroutine(PlayAnimation("BlueLensOn", "BlueLensOff", BlueMask, BlueLensMask, true));
         Physics.IgnoreLayerCollision(playerLayer, blueLayer, false);
     }
 
     public void ToggleBlueOff()
     {
-        cam.cullingMask -= BlueMask;
-
+        playing = true;
+        //cam.cullingMask -= BlueMask;
+        //StartCoroutine(PlayAnimation("BlueLensOn", "BlueLensOff", BlueMask, BlueLensMask, false));
+        StartCoroutine(EndAnimation("BlueLensOff", BlueMask));
         Physics.IgnoreLayerCollision(playerLayer, blueLayer, true);
     }
 
@@ -124,6 +148,7 @@ public class LensManager : MonoBehaviour
         float clipLength = info.length;
 
         yield return new WaitForSeconds(clipLength);
+        playing = false;
     }
 
     public IEnumerator EndAnimation(string stateName, LayerMask mask)
@@ -135,7 +160,7 @@ public class LensManager : MonoBehaviour
         float clipLength = info.length;
 
         yield return new WaitForSeconds(clipLength);
-
+        playing = false;
         cam.cullingMask -= mask;
     }
 
@@ -152,6 +177,7 @@ public class LensManager : MonoBehaviour
             AnimatorStateInfo info = LensAnim.GetCurrentAnimatorStateInfo(0);
             float clipLength = info.length;
             cam.cullingMask += mask;
+            
             yield return new WaitForSeconds(clipLength);
         }
 
@@ -160,16 +186,16 @@ public class LensManager : MonoBehaviour
             LensAnim.Play(stateNameOff, 0, 0f);
             
             yield return new WaitForSeconds(0.25f);
-            cam.cullingMask -= mask;
+            
             AnimatorStateInfo info = LensAnim.GetCurrentAnimatorStateInfo(0);
             float clipLength = info.length;
 
             yield return new WaitForSeconds(clipLength);
-            
 
+            cam.cullingMask -= mask;
             //yield return new WaitForSeconds(2f);
             //cam.cullingMask -= lensMask;
-            
+
         }
     }
 
